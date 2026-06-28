@@ -1,21 +1,21 @@
 /* ============================================================================
- * LayoverX Design Tokens
- * Single source of truth for color, type, space, motion, and elevation.
- * Pure custom properties — no Tailwind, no preprocessor dependencies.
+ * LayoverX Design Tokens v2
+ * Includes gradients, glass tokens, motion vocabulary.
  * ========================================================================== */
 
 :root {
   /* ─── Color: Brand ────────────────────────────────────────────────────── */
-  --brand-50:  #e6f4fb;
-  --brand-100: #c6e4f5;
-  --brand-200: #8fcaea;
-  --brand-300: #56afde;
-  --brand-400: #2495d3;
-  --brand-500: #0a7bc1;   /* Primary */
+  --brand-50:  #eff7fd;
+  --brand-100: #d9ecf9;
+  --brand-200: #b2d9f3;
+  --brand-300: #7fbeea;
+  --brand-400: #4ba2de;
+  --brand-500: #0a7bc1;
   --brand-600: #0863a0;
   --brand-700: #064e80;
   --brand-800: #053b63;
   --brand-900: #042742;
+  --brand-950: #021627;
 
   /* ─── Color: Neutrals (slate) ─────────────────────────────────────────── */
   --neutral-0:   #ffffff;
@@ -33,34 +33,48 @@
 
   /* ─── Color: Status ───────────────────────────────────────────────────── */
   --success-50:  #ecfdf5;
+  --success-100: #d1fae5;
   --success-500: #10b981;
+  --success-600: #059669;
   --success-700: #047857;
 
   --warning-50:  #fffbeb;
+  --warning-100: #fef3c7;
   --warning-500: #f59e0b;
+  --warning-600: #d97706;
   --warning-700: #b45309;
 
   --danger-50:   #fef2f2;
+  --danger-100:  #fee2e2;
   --danger-500:  #ef4444;
+  --danger-600:  #dc2626;
   --danger-700:  #b91c1c;
 
   --info-50:     #eff6ff;
+  --info-100:    #dbeafe;
   --info-500:    #3b82f6;
   --info-700:    #1d4ed8;
 
-  /* ─── Color: Sector accents (theme overrides via data-theme) ─────────── */
-  --accent-hotels:      #b08a3e;   /* Warm gold */
-  --accent-restaurants: #d35400;   /* Sunset orange */
-  --accent-spa:         #7c3aed;   /* Calm violet */
-  --accent-gaming:      #c026d3;   /* Electric fuchsia */
-  --accent-tours:       #e11d48;   /* Heritage rose */
-  --accent-transfers:   #475569;   /* Executive slate */
+  /* ─── Color: Sector accents ───────────────────────────────────────────── */
+  --accent-hotels:      #b08a3e;
+  --accent-hotels-soft: #f5ecd8;
+  --accent-restaurants: #d35400;
+  --accent-restaurants-soft: #fde6d3;
+  --accent-spa:         #7c3aed;
+  --accent-spa-soft:    #ece1fd;
+  --accent-gaming:      #c026d3;
+  --accent-gaming-soft: #f5d6fa;
+  --accent-tours:       #e11d48;
+  --accent-tours-soft:  #fbd6df;
+  --accent-transfers:   #475569;
+  --accent-transfers-soft: #e1e6ec;
 
   /* ─── Semantic surfaces ──────────────────────────────────────────────── */
   --color-bg:           var(--neutral-50);
   --color-surface:      var(--neutral-0);
   --color-surface-alt:  var(--neutral-100);
-  --color-surface-dark: var(--neutral-900);
+  --color-surface-dark: var(--neutral-950);
+  --color-surface-soft: #fbfcfd;
   --color-border:       var(--neutral-200);
   --color-border-strong:var(--neutral-300);
 
@@ -71,6 +85,23 @@
 
   --color-link:         var(--brand-600);
   --color-link-hover:   var(--brand-700);
+
+  /* ─── Brand gradients ────────────────────────────────────────────────── */
+  --gradient-brand:     linear-gradient(135deg, #0a7bc1 0%, #0863a0 50%, #053b63 100%);
+  --gradient-brand-soft:linear-gradient(135deg, #4ba2de 0%, #0a7bc1 100%);
+  --gradient-hero:      linear-gradient(135deg, #052a44 0%, #064e80 45%, #0863a0 100%);
+  --gradient-aurora:    radial-gradient(at 20% 20%, rgba(124, 58, 237, 0.25) 0, transparent 50%),
+                         radial-gradient(at 80% 0%, rgba(10, 123, 193, 0.35) 0, transparent 50%),
+                         radial-gradient(at 80% 80%, rgba(192, 38, 211, 0.20) 0, transparent 50%);
+  --gradient-text:      linear-gradient(120deg, #4ba2de 0%, #0a7bc1 50%, #0863a0 100%);
+  --gradient-card-hover:linear-gradient(135deg, rgba(10, 123, 193, 0.04) 0%, rgba(10, 123, 193, 0) 100%);
+
+  /* ─── Glass ──────────────────────────────────────────────────────────── */
+  --glass-bg:        rgba(255, 255, 255, 0.78);
+  --glass-bg-dark:   rgba(15, 23, 42, 0.55);
+  --glass-border:    rgba(255, 255, 255, 0.55);
+  --glass-blur:      saturate(180%) blur(16px);
+  --glass-blur-strong: saturate(200%) blur(24px);
 
   /* ─── Typography ─────────────────────────────────────────────────────── */
   --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto,
@@ -91,9 +122,11 @@
   --fs-5xl:  3rem;       /* 48px */
   --fs-6xl:  3.75rem;    /* 60px */
   --fs-7xl:  4.5rem;     /* 72px */
+  --fs-8xl:  5.5rem;     /* 88px */
+  --fs-9xl:  6.5rem;     /* 104px */
 
-  --lh-tight:   1.1;
-  --lh-snug:    1.25;
+  --lh-tight:   1.05;
+  --lh-snug:    1.2;
   --lh-normal:  1.5;
   --lh-relaxed: 1.65;
 
@@ -104,11 +137,13 @@
   --fw-extrabold: 800;
   --fw-black:     900;
 
-  --tracking-tight:  -0.02em;
-  --tracking-snug:   -0.01em;
-  --tracking-wide:    0.02em;
-  --tracking-wider:   0.08em;
-  --tracking-widest:  0.14em;
+  --tracking-tighter: -0.04em;
+  --tracking-tight:   -0.02em;
+  --tracking-snug:    -0.01em;
+  --tracking-normal:   0;
+  --tracking-wide:     0.02em;
+  --tracking-wider:    0.06em;
+  --tracking-widest:   0.14em;
 
   /* ─── Spacing — 8pt grid (also 4pt for fine adjustments) ────────────── */
   --space-0:   0;
@@ -121,11 +156,13 @@
   --space-8:   2rem;     /* 32 */
   --space-10:  2.5rem;   /* 40 */
   --space-12:  3rem;     /* 48 */
+  --space-14:  3.5rem;   /* 56 */
   --space-16:  4rem;     /* 64 */
   --space-20:  5rem;     /* 80 */
   --space-24:  6rem;     /* 96 */
   --space-32:  8rem;     /* 128 */
   --space-40:  10rem;    /* 160 */
+  --space-48:  12rem;    /* 192 */
 
   /* ─── Radius ──────────────────────────────────────────────────────────── */
   --radius-xs:   4px;
@@ -134,6 +171,7 @@
   --radius-lg:   16px;
   --radius-xl:   24px;
   --radius-2xl:  32px;
+  --radius-3xl:  48px;
   --radius-pill: 999px;
   --radius-full: 50%;
 
@@ -143,21 +181,28 @@
   --shadow-md: 0 4px 12px -2px rgba(15, 23, 42, 0.08), 0 2px 6px -2px rgba(15, 23, 42, 0.04);
   --shadow-lg: 0 12px 28px -6px rgba(15, 23, 42, 0.12), 0 4px 10px -4px rgba(15, 23, 42, 0.06);
   --shadow-xl: 0 24px 48px -12px rgba(15, 23, 42, 0.18), 0 8px 16px -6px rgba(15, 23, 42, 0.08);
+  --shadow-2xl: 0 40px 80px -20px rgba(15, 23, 42, 0.25), 0 16px 32px -10px rgba(15, 23, 42, 0.10);
   --shadow-glow: 0 0 0 4px rgba(10, 123, 193, 0.12);
-  --shadow-focus: 0 0 0 3px rgba(10, 123, 193, 0.4);
+  --shadow-focus: 0 0 0 3px rgba(10, 123, 193, 0.45);
+  --shadow-brand: 0 14px 32px -10px rgba(10, 123, 193, 0.45), 0 4px 12px -4px rgba(10, 123, 193, 0.30);
 
   /* ─── Motion ─────────────────────────────────────────────────────────── */
   --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-emphasis: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-spring:   cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out:      cubic-bezier(0, 0, 0.2, 1);
+  --ease-in:       cubic-bezier(0.4, 0, 1, 1);
+  --dur-instant: 80ms;
   --dur-fast:    140ms;
   --dur-base:    220ms;
   --dur-slow:    380ms;
+  --dur-slower:  520ms;
 
   /* ─── Layout ─────────────────────────────────────────────────────────── */
-  --container-max:  1200px;
-  --container-wide: 1320px;
+  --container-max:  1240px;
+  --container-wide: 1400px;
   --container-narrow: 760px;
+  --container-text: 64ch;
   --header-height:  72px;
   --header-height-mobile: 64px;
 
@@ -169,19 +214,22 @@
   --z-toast:    600;
 }
 
-/* ─── Sector themes — applied via [data-theme="…"] on a section or page ── */
-[data-theme="hotels"]      { --color-link: var(--accent-hotels);      --color-link-hover: #8c6b2e; }
-[data-theme="restaurants"] { --color-link: var(--accent-restaurants); --color-link-hover: #a73e00; }
-[data-theme="spa"]         { --color-link: var(--accent-spa);         --color-link-hover: #5b21b6; }
-[data-theme="gaming"]      { --color-link: var(--accent-gaming);      --color-link-hover: #86198f; }
-[data-theme="tours"]       { --color-link: var(--accent-tours);       --color-link-hover: #9f1239; }
-[data-theme="transfers"]   { --color-link: var(--accent-transfers);   --color-link-hover: #1e293b; }
+/* ─── Sector themes — applied via [data-theme="…"] on <body> ─────────── */
+[data-theme="hotels"]      { --color-link: var(--accent-hotels);      --color-link-hover: #8c6b2e; --sector-tint: var(--accent-hotels);      --sector-tint-soft: var(--accent-hotels-soft); }
+[data-theme="restaurants"] { --color-link: var(--accent-restaurants); --color-link-hover: #a73e00; --sector-tint: var(--accent-restaurants); --sector-tint-soft: var(--accent-restaurants-soft); }
+[data-theme="spa"]         { --color-link: var(--accent-spa);         --color-link-hover: #5b21b6; --sector-tint: var(--accent-spa);         --sector-tint-soft: var(--accent-spa-soft); }
+[data-theme="gaming"]      { --color-link: var(--accent-gaming);      --color-link-hover: #86198f; --sector-tint: var(--accent-gaming);      --sector-tint-soft: var(--accent-gaming-soft); }
+[data-theme="tours"]       { --color-link: var(--accent-tours);       --color-link-hover: #9f1239; --sector-tint: var(--accent-tours);       --sector-tint-soft: var(--accent-tours-soft); }
+[data-theme="transfers"]   { --color-link: var(--accent-transfers);   --color-link-hover: #1e293b; --sector-tint: var(--accent-transfers);   --sector-tint-soft: var(--accent-transfers-soft); }
+
+:root {
+  --sector-tint: var(--brand-500);
+  --sector-tint-soft: var(--brand-50);
+}
 
 /* ─── Reduced motion ─────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

@@ -1,16 +1,18 @@
 /* ============================================================================
- * LayoverX Cards
- * Three base styles: default, elevated, flat. Optional interactive lift.
+ * LayoverX Cards v2
+ * Variants: default, elevated, flat, glass, image-led, stat, pricing, profile.
  * ========================================================================== */
 
 .card {
+  --_radius: var(--radius-lg);
+  --_pad: var(--space-6);
+  position: relative;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-6);
+  border-radius: var(--_radius);
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  isolation: isolate;
   transition:
     transform var(--dur-base) var(--ease-emphasis),
     box-shadow var(--dur-base) var(--ease-standard),
@@ -22,18 +24,21 @@
   border-color: transparent;
 }
 
-.card-flat {
-  border: 1px solid var(--color-border);
-  box-shadow: none;
+.card-flat { border: 1px solid var(--color-border); box-shadow: none; }
+
+.card-glass {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-color: var(--glass-border);
+  box-shadow: var(--shadow-md);
 }
 
-.card-interactive {
-  cursor: pointer;
-}
+.card-interactive { cursor: pointer; }
 
 .card-interactive:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-xl);
   border-color: var(--brand-200);
 }
 
@@ -50,52 +55,95 @@
 /* ─── Card parts ──────────────────────────────────────────────────────── */
 .card-media {
   position: relative;
-  aspect-ratio: 16 / 11;
-  border-radius: var(--radius-md);
+  aspect-ratio: 4 / 3;
+  border-top-left-radius: var(--_radius);
+  border-top-right-radius: var(--_radius);
   overflow: hidden;
-  background: var(--color-surface-alt);
+  background: linear-gradient(135deg, var(--neutral-200), var(--neutral-100));
 }
 
-.card-media img {
+.card-media-16x9 { aspect-ratio: 16 / 9; }
+.card-media-3x4  { aspect-ratio: 3 / 4; }
+.card-media-1x1  { aspect-ratio: 1 / 1; }
+
+.card-media img,
+.card-media video {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform var(--dur-slow) var(--ease-emphasis);
+  transition: transform var(--dur-slower) var(--ease-emphasis);
 }
 
-.card-interactive:hover .card-media img {
-  transform: scale(1.04);
+.card-interactive:hover .card-media img,
+.card-interactive:hover .card-media video {
+  transform: scale(1.08);
 }
 
-.card-media-badge {
+.card-media-gradient::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(15, 23, 42, 0.55));
+  pointer-events: none;
+}
+
+.card-media-badges {
   position: absolute;
   top: var(--space-3);
   left: var(--space-3);
+  right: var(--space-3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.card-media-badges > * { pointer-events: auto; }
+
+.card-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
   padding: var(--space-1) var(--space-3);
-  background: rgba(15, 23, 42, 0.78);
+  background: rgba(15, 23, 42, 0.72);
   color: var(--color-text-invert);
   font-size: var(--fs-xs);
   font-weight: var(--fw-semibold);
   border-radius: var(--radius-pill);
   backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-.card-media-wishlist {
-  position: absolute;
-  top: var(--space-3);
-  right: var(--space-3);
+.card-badge.bright { background: rgba(255, 255, 255, 0.92); color: var(--neutral-900); }
+.card-badge.brand { background: var(--brand-500); border-color: transparent; }
+
+.card-wishlist {
   width: 36px;
   height: 36px;
   display: grid;
   place-items: center;
-  background: rgba(255,255,255,0.92);
+  background: rgba(255, 255, 255, 0.92);
   border-radius: var(--radius-pill);
   color: var(--neutral-700);
+  cursor: pointer;
   transition: all var(--dur-fast) var(--ease-standard);
+  box-shadow: var(--shadow-sm);
+}
+.card-wishlist:hover { color: var(--danger-500); transform: scale(1.06); }
+.card-wishlist[aria-pressed="true"] {
+  color: var(--color-text-invert);
+  background: var(--danger-500);
 }
 
-.card-media-wishlist:hover { color: var(--danger-500); transform: scale(1.06); }
-.card-media-wishlist[aria-pressed="true"] { color: var(--danger-500); }
+.card-body {
+  padding: var(--_pad);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  flex: 1;
+}
 
 .card-header {
   display: flex;
@@ -109,17 +157,45 @@
   font-weight: var(--fw-bold);
   line-height: 1.3;
   color: var(--color-text);
+  letter-spacing: var(--tracking-snug);
 }
 
+.card-title-sm { font-size: var(--fs-base); font-weight: var(--fw-semibold); }
+
 .card-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
   font-size: var(--fs-sm);
   color: var(--color-text-muted);
 }
 
-.card-body {
+.card-description {
   color: var(--color-text-muted);
   line-height: var(--lh-relaxed);
   font-size: var(--fs-sm);
+}
+
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.card-list-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+}
+.card-list-item svg { color: var(--brand-500); flex-shrink: 0; }
+
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin-top: auto;
 }
 
 .card-footer {
@@ -127,35 +203,259 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-3);
-  margin-top: auto;
-  padding-top: var(--space-4);
+  padding: var(--space-4) var(--_pad);
   border-top: 1px solid var(--color-border);
+  margin-top: auto;
+}
+
+.card-footer-simple {
+  padding: 0 var(--_pad) var(--_pad);
+  margin-top: var(--space-3);
 }
 
 /* ─── Stat card ───────────────────────────────────────────────────────── */
 .card-stat {
+  padding: var(--space-8);
   text-align: left;
+  position: relative;
+  overflow: hidden;
 }
 
-.card-stat-value {
-  font-size: var(--fs-3xl);
-  font-weight: var(--fw-black);
-  line-height: 1.1;
-  color: var(--color-text);
+.card-stat::after {
+  content: "";
+  position: absolute;
+  top: 0; right: 0;
+  width: 160px; height: 160px;
+  background: radial-gradient(circle at top right, var(--brand-50), transparent 70%);
+  pointer-events: none;
+  z-index: -1;
 }
 
 .card-stat-label {
   font-size: var(--fs-xs);
-  font-weight: var(--fw-semibold);
+  font-weight: var(--fw-bold);
   text-transform: uppercase;
-  letter-spacing: var(--tracking-wider);
+  letter-spacing: var(--tracking-widest);
   color: var(--color-text-muted);
-  margin-top: var(--space-2);
+  margin-bottom: var(--space-3);
 }
 
-/* ─── Service card (used for hotels / restaurants / spa) ─────────────── */
-.service-card { padding: 0; overflow: hidden; }
-.service-card .card-body { padding-inline: var(--space-6); }
-.service-card .card-header,
-.service-card .card-footer { padding-inline: var(--space-6); }
-.service-card .card-footer { padding-bottom: var(--space-6); }
+.card-stat-value {
+  font-size: var(--fs-5xl);
+  font-weight: var(--fw-black);
+  line-height: 1;
+  color: var(--color-text);
+  letter-spacing: var(--tracking-tighter);
+  font-variant-numeric: tabular-nums;
+}
+
+.card-stat-value-suffix {
+  font-size: var(--fs-xl);
+  color: var(--color-text-muted);
+  margin-left: var(--space-1);
+  font-weight: var(--fw-semibold);
+}
+
+.card-stat-foot {
+  margin-top: var(--space-3);
+  font-size: var(--fs-xs);
+  color: var(--color-text-subtle);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.card-stat-delta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  color: var(--success-600);
+}
+
+/* ─── Service / product card ─────────────────────────────────────────── */
+.service-card { padding: 0; }
+.service-card .card-body { padding: var(--space-5); gap: var(--space-2); }
+.service-card .card-footer { padding: var(--space-5); border-top: 1px solid var(--color-border); }
+
+/* ─── Compact card (carousel) ────────────────────────────────────────── */
+.card-compact { padding: 0; }
+.card-compact .card-body { padding: var(--space-4); gap: var(--space-1); }
+.card-compact .card-footer { padding: var(--space-3) var(--space-4); }
+
+/* ─── Feature card (value props) ─────────────────────────────────────── */
+.feature-card {
+  padding: var(--space-8);
+  background: var(--color-surface);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border);
+  transition: all var(--dur-base) var(--ease-standard);
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--brand-300);
+}
+
+.feature-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-card-hover);
+  opacity: 0;
+  transition: opacity var(--dur-base) var(--ease-standard);
+  pointer-events: none;
+}
+.feature-card:hover::before { opacity: 1; }
+
+.feature-icon {
+  width: 52px;
+  height: 52px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--brand-100), var(--brand-50));
+  color: var(--brand-700);
+  margin-bottom: var(--space-5);
+}
+
+.feature-title {
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-bold);
+  margin-bottom: var(--space-2);
+  letter-spacing: var(--tracking-snug);
+}
+
+.feature-text {
+  font-size: var(--fs-sm);
+  line-height: var(--lh-relaxed);
+  color: var(--color-text-muted);
+}
+
+/* ─── Pricing-style card ─────────────────────────────────────────────── */
+.pricing-card {
+  padding: var(--space-8);
+  border-radius: var(--radius-2xl);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  position: relative;
+}
+
+.pricing-card-featured {
+  background: var(--gradient-hero);
+  color: var(--color-text-invert);
+  border-color: transparent;
+  box-shadow: var(--shadow-xl);
+}
+
+.pricing-card-featured .pricing-feature { color: rgba(255, 255, 255, 0.85); }
+
+/* ─── Sector-themed category card ───────────────────────────────────── */
+.cat-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-8);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: all var(--dur-base) var(--ease-standard);
+  isolation: isolate;
+}
+
+.cat-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(135deg, var(--cat-accent, var(--brand-400)), transparent 60%);
+  opacity: 0;
+  transition: opacity var(--dur-base) var(--ease-standard);
+  z-index: -1;
+  border-radius: inherit;
+}
+
+.cat-card::after {
+  content: "→";
+  position: absolute;
+  top: var(--space-6);
+  right: var(--space-6);
+  width: 36px; height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-full);
+  background: var(--neutral-100);
+  color: var(--neutral-700);
+  font-size: var(--fs-lg);
+  transition: all var(--dur-base) var(--ease-emphasis);
+}
+
+.cat-card:hover {
+  border-color: var(--cat-accent, var(--brand-300));
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-xl);
+}
+
+.cat-card:hover::after {
+  background: var(--cat-accent, var(--brand-500));
+  color: var(--color-text-invert);
+  transform: translateX(6px) rotate(-12deg);
+}
+
+.cat-card-icon {
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-lg);
+  background: var(--cat-accent-soft, var(--brand-50));
+  color: var(--cat-accent, var(--brand-600));
+  margin-bottom: var(--space-5);
+  transition: all var(--dur-base) var(--ease-emphasis);
+}
+
+.cat-card:hover .cat-card-icon {
+  transform: scale(1.05);
+}
+
+.cat-card-title {
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-bold);
+  margin-bottom: var(--space-2);
+  letter-spacing: var(--tracking-snug);
+}
+
+.cat-card-text {
+  font-size: var(--fs-sm);
+  line-height: var(--lh-relaxed);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-5);
+}
+
+.cat-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: auto;
+}
+
+.cat-card-highlight {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-5);
+  padding-top: var(--space-5);
+  border-top: 1px dashed var(--color-border);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--cat-accent, var(--brand-700));
+}
