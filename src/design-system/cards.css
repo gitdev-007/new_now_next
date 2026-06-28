@@ -1,0 +1,161 @@
+/* ============================================================================
+ * LayoverX Cards
+ * Three base styles: default, elevated, flat. Optional interactive lift.
+ * ========================================================================== */
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  transition:
+    transform var(--dur-base) var(--ease-emphasis),
+    box-shadow var(--dur-base) var(--ease-standard),
+    border-color var(--dur-fast) var(--ease-standard);
+}
+
+.card-elevated {
+  box-shadow: var(--shadow-md);
+  border-color: transparent;
+}
+
+.card-flat {
+  border: 1px solid var(--color-border);
+  box-shadow: none;
+}
+
+.card-interactive {
+  cursor: pointer;
+}
+
+.card-interactive:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--brand-200);
+}
+
+.card-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.card-link:focus-visible {
+  outline: 2px solid var(--brand-500);
+  outline-offset: 3px;
+}
+
+/* ─── Card parts ──────────────────────────────────────────────────────── */
+.card-media {
+  position: relative;
+  aspect-ratio: 16 / 11;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-surface-alt);
+}
+
+.card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-slow) var(--ease-emphasis);
+}
+
+.card-interactive:hover .card-media img {
+  transform: scale(1.04);
+}
+
+.card-media-badge {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+  padding: var(--space-1) var(--space-3);
+  background: rgba(15, 23, 42, 0.78);
+  color: var(--color-text-invert);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  border-radius: var(--radius-pill);
+  backdrop-filter: blur(8px);
+}
+
+.card-media-wishlist {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  background: rgba(255,255,255,0.92);
+  border-radius: var(--radius-pill);
+  color: var(--neutral-700);
+  transition: all var(--dur-fast) var(--ease-standard);
+}
+
+.card-media-wishlist:hover { color: var(--danger-500); transform: scale(1.06); }
+.card-media-wishlist[aria-pressed="true"] { color: var(--danger-500); }
+
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.card-title {
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-bold);
+  line-height: 1.3;
+  color: var(--color-text);
+}
+
+.card-meta {
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+}
+
+.card-body {
+  color: var(--color-text-muted);
+  line-height: var(--lh-relaxed);
+  font-size: var(--fs-sm);
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-top: auto;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+/* ─── Stat card ───────────────────────────────────────────────────────── */
+.card-stat {
+  text-align: left;
+}
+
+.card-stat-value {
+  font-size: var(--fs-3xl);
+  font-weight: var(--fw-black);
+  line-height: 1.1;
+  color: var(--color-text);
+}
+
+.card-stat-label {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  color: var(--color-text-muted);
+  margin-top: var(--space-2);
+}
+
+/* ─── Service card (used for hotels / restaurants / spa) ─────────────── */
+.service-card { padding: 0; overflow: hidden; }
+.service-card .card-body { padding-inline: var(--space-6); }
+.service-card .card-header,
+.service-card .card-footer { padding-inline: var(--space-6); }
+.service-card .card-footer { padding-bottom: var(--space-6); }

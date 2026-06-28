@@ -1,0 +1,212 @@
+/* ============================================================================
+ * LayoverX Forms
+ * Inputs, selects, labels, validation states, helper text.
+ * ========================================================================== */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.field-row {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .field-row.cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .field-row.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .field-row.cols-4 { grid-template-columns: repeat(4, 1fr); }
+}
+
+.label {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  color: var(--neutral-700);
+}
+
+.label-optional {
+  font-weight: var(--fw-regular);
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--color-text-subtle);
+  margin-left: var(--space-2);
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--fs-base);
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition:
+    border-color var(--dur-fast) var(--ease-standard),
+    box-shadow var(--dur-fast) var(--ease-standard),
+    background var(--dur-fast) var(--ease-standard);
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--color-text-subtle);
+}
+
+.input:hover,
+.select:hover,
+.textarea:hover {
+  border-color: var(--color-border-strong);
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--brand-500);
+  box-shadow: var(--shadow-focus);
+}
+
+.input[aria-invalid="true"],
+.select[aria-invalid="true"],
+.textarea[aria-invalid="true"] {
+  border-color: var(--danger-500);
+  background: var(--danger-50);
+}
+
+.input[aria-invalid="true"]:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25);
+}
+
+.textarea {
+  min-height: 120px;
+  padding-block: var(--space-3);
+  resize: vertical;
+  line-height: var(--lh-relaxed);
+}
+
+/* ─── Select chevron ──────────────────────────────────────────────────── */
+.select-wrap {
+  position: relative;
+}
+
+.select-wrap::after {
+  content: "";
+  position: absolute;
+  right: var(--space-4);
+  top: 50%;
+  width: 8px; height: 8px;
+  border-right: 2px solid var(--neutral-500);
+  border-bottom: 2px solid var(--neutral-500);
+  transform: translateY(-70%) rotate(45deg);
+  pointer-events: none;
+}
+
+.select {
+  padding-right: var(--space-10);
+  cursor: pointer;
+}
+
+/* ─── Helper text ─────────────────────────────────────────────────────── */
+.helper {
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+  line-height: 1.45;
+}
+
+.helper-error {
+  color: var(--danger-700);
+}
+
+/* ─── Input with icon ─────────────────────────────────────────────────── */
+.input-icon-wrap {
+  position: relative;
+}
+
+.input-icon-wrap .input,
+.input-icon-wrap .select {
+  padding-left: 2.75rem;
+}
+
+.input-icon {
+  position: absolute;
+  left: var(--space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px; height: 20px;
+  color: var(--color-text-muted);
+  pointer-events: none;
+}
+
+.input-action {
+  position: absolute;
+  right: var(--space-2);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px; height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  transition: color var(--dur-fast) var(--ease-standard);
+}
+
+.input-action:hover { color: var(--color-text); }
+
+/* ─── Checkbox / radio ───────────────────────────────────────────────── */
+.checkbox,
+.radio {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+  font-size: var(--fs-sm);
+  color: var(--color-text);
+}
+
+.checkbox input,
+.radio input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--brand-500);
+  cursor: pointer;
+}
+
+/* ─── Search bar (hero variant) ──────────────────────────────────────── */
+.search-bar {
+  background: var(--color-surface);
+  border-radius: var(--radius-xl);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-xl);
+  border: 1px solid var(--color-border);
+}
+
+.search-bar-grid {
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .search-bar-grid { grid-template-columns: repeat(2, 1fr) auto; }
+  .search-bar-grid.cols-4 { grid-template-columns: repeat(3, 1fr) auto; }
+}
+
+.search-bar .field {
+  gap: var(--space-1);
+  padding-inline: var(--space-3);
+  border-right: 1px solid var(--color-border);
+}
+
+.search-bar .field:last-child {
+  border-right: 0;
+}

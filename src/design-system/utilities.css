@@ -1,0 +1,78 @@
+/* ============================================================================
+ * LayoverX Utilities
+ * Helpers that don't fit anywhere else.
+ * ========================================================================== */
+
+/* Text utilities */
+.text-center { text-align: center; }
+.text-right  { text-align: right; }
+.text-muted  { color: var(--color-text-muted); }
+.text-subtle { color: var(--color-text-subtle); }
+.text-invert { color: var(--color-text-invert); }
+.text-brand  { color: var(--brand-600); }
+
+/* Display */
+.hidden   { display: none !important; }
+.block    { display: block; }
+.inline   { display: inline; }
+.flex     { display: flex; }
+.grid     { display: grid; }
+
+/* Width */
+.w-full   { width: 100%; }
+.max-w-prose { max-width: 65ch; }
+.mx-auto  { margin-inline: auto; }
+
+/* Gap helpers */
+.gap-2 { gap: var(--space-2); }
+.gap-3 { gap: var(--space-3); }
+.gap-4 { gap: var(--space-4); }
+.gap-6 { gap: var(--space-6); }
+.gap-8 { gap: var(--space-8); }
+
+/* Margin helpers */
+.mt-2 { margin-top: var(--space-2); }
+.mt-3 { margin-top: var(--space-3); }
+.mt-4 { margin-top: var(--space-4); }
+.mt-6 { margin-top: var(--space-6); }
+.mt-8 { margin-top: var(--space-8); }
+.mt-12 { margin-top: var(--space-12); }
+
+.mb-2 { margin-bottom: var(--space-2); }
+.mb-3 { margin-bottom: var(--space-3); }
+.mb-4 { margin-bottom: var(--space-4); }
+.mb-6 { margin-bottom: var(--space-6); }
+.mb-8 { margin-bottom: var(--space-8); }
+.mb-12 { margin-bottom: var(--space-12); }
+
+/* Flex helpers */
+.items-center { align-items: center; }
+.items-start  { align-items: flex-start; }
+.justify-between { justify-content: space-between; }
+.justify-center  { justify-content: center; }
+.flex-wrap { flex-wrap: wrap; }
+
+/* Visibility per breakpoint — mobile-first */
+.desktop-only { display: none; }
+@media (min-width: 1024px) { .desktop-only { display: inherit; } }
+.mobile-only  { display: inherit; }
+@media (min-width: 1024px) { .mobile-only { display: none; } }
+
+/* Loading skeleton */
+.skeleton {
+  background: linear-gradient(90deg, var(--neutral-200) 25%, var(--neutral-100) 50%, var(--neutral-200) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.4s linear infinite;
+  border-radius: var(--radius-sm);
+}
+
+@keyframes skeleton-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Inline icon sizing */
+.icon-sm { width: 16px; height: 16px; }
+.icon    { width: 20px; height: 20px; }
+.icon-lg { width: 24px; height: 24px; }
+.icon-xl { width: 32px; height: 32px; }

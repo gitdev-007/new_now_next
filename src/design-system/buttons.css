@@ -1,0 +1,177 @@
+/* ============================================================================
+ * LayoverX Buttons
+ * Sizes: sm, md (default), lg. Variants: primary, secondary, ghost, outline, danger, link.
+ * ========================================================================== */
+
+.btn {
+  --_bg: var(--brand-500);
+  --_bg-hover: var(--brand-600);
+  --_fg: var(--color-text-invert);
+  --_border: transparent;
+  --_padding-y: 0.75rem;
+  --_padding-x: 1.5rem;
+  --_font-size: var(--fs-base);
+  --_radius: var(--radius-md);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+
+  min-height: 44px;            /* touch target */
+  padding: var(--_padding-y) var(--_padding-x);
+  font-size: var(--_font-size);
+  font-weight: var(--fw-semibold);
+  line-height: 1;
+  letter-spacing: -0.005em;
+
+  background: var(--_bg);
+  color: var(--_fg);
+  border: 1px solid var(--_border);
+  border-radius: var(--_radius);
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  text-decoration: none;
+
+  transition:
+    background-color var(--dur-fast) var(--ease-standard),
+    color var(--dur-fast) var(--ease-standard),
+    border-color var(--dur-fast) var(--ease-standard),
+    transform var(--dur-fast) var(--ease-standard),
+    box-shadow var(--dur-fast) var(--ease-standard);
+}
+
+.btn:hover {
+  background: var(--_bg-hover);
+  color: var(--_fg);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn:active { transform: translateY(0); box-shadow: var(--shadow-sm); }
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ─── Variants ────────────────────────────────────────────────────────── */
+.btn-primary {
+  --_bg: var(--brand-500);
+  --_bg-hover: var(--brand-600);
+  --_fg: var(--color-text-invert);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-secondary {
+  --_bg: var(--neutral-900);
+  --_bg-hover: var(--neutral-800);
+  --_fg: var(--color-text-invert);
+}
+
+.btn-outline {
+  --_bg: transparent;
+  --_bg-hover: var(--brand-50);
+  --_fg: var(--brand-700);
+  --_border: var(--brand-300);
+}
+
+.btn-ghost {
+  --_bg: transparent;
+  --_bg-hover: var(--neutral-100);
+  --_fg: var(--color-text);
+  --_border: transparent;
+}
+
+.btn-danger {
+  --_bg: var(--danger-500);
+  --_bg-hover: var(--danger-700);
+  --_fg: var(--color-text-invert);
+}
+
+.btn-link {
+  --_bg: transparent;
+  --_bg-hover: transparent;
+  --_fg: var(--color-link);
+  --_border: transparent;
+  padding-inline: 0;
+  min-height: auto;
+  text-decoration: none;
+}
+
+.btn-link:hover { color: var(--color-link-hover); transform: none; box-shadow: none; }
+
+/* ─── Sizes ───────────────────────────────────────────────────────────── */
+.btn-sm {
+  --_padding-y: 0.5rem;
+  --_padding-x: 1rem;
+  --_font-size: var(--fs-sm);
+  --_radius: var(--radius-sm);
+  min-height: 36px;
+}
+
+.btn-lg {
+  --_padding-y: 1rem;
+  --_padding-x: 2rem;
+  --_font-size: var(--fs-md);
+  --_radius: var(--radius-md);
+  min-height: 56px;
+}
+
+.btn-block { width: 100%; }
+
+/* ─── Icon-only ───────────────────────────────────────────────────────── */
+.btn-icon {
+  width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border-radius: var(--radius-md);
+}
+
+.btn-icon.btn-sm { width: 36px; min-height: 36px; }
+.btn-icon.btn-lg { width: 56px; min-height: 56px; }
+
+/* ─── Pill / rounded ──────────────────────────────────────────────────── */
+.btn-pill { --_radius: var(--radius-pill); }
+
+/* ─── On dark surfaces ────────────────────────────────────────────────── */
+.section-dark .btn-primary,
+.btn-on-dark.btn-primary {
+  --_bg: var(--neutral-0);
+  --_bg-hover: var(--neutral-100);
+  --_fg: var(--neutral-900);
+}
+
+.section-dark .btn-outline,
+.btn-on-dark.btn-outline {
+  --_bg: transparent;
+  --_fg: var(--color-text-invert);
+  --_border: rgba(255,255,255,0.25);
+  --_bg-hover: rgba(255,255,255,0.08);
+}
+
+/* ─── Loading state ───────────────────────────────────────────────────── */
+.btn.is-loading {
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+.btn .btn-spinner {
+  width: 16px; height: 16px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: var(--radius-full);
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ─── Button group ────────────────────────────────────────────────────── */
+.btn-group {
+  display: inline-flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}

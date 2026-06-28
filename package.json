@@ -1,0 +1,22 @@
+{
+  "name": "layoverx",
+  "version": "2.0.0",
+  "description": "LayoverX — premium stopover experience platform for travelers with Mumbai airport layovers.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --port 4173",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --ext .ts --ext .js"
+  },
+  "engines": {
+    "node": ">=18.17.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.0.1",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.11"
+  }
+}

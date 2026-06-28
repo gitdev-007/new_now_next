@@ -1,0 +1,17 @@
+/* ============================================================================
+ * LayoverX Design System — single entry point
+ * Cascade order is critical. Do not reorder.
+ * ========================================================================== */
+
+@import "./tokens.css";
+@import "./reset.css";
+@import "./typography.css";
+@import "./layout.css";
+@import "./buttons.css";
+@import "./cards.css";
+@import "./forms.css";
+@import "./navigation.css";
+@import "./components.css";
+@import "./sections.css";
+@import "./utilities.css";
+@import "./animations.css";
