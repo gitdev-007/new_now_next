@@ -302,6 +302,8 @@ interface AppHost {
   onSubmit?: (form: HTMLFormElement) => void;
 }
 
+import { initCarousels, initTabs } from "./ui";
+
 export function bootApp(): void {
   applyMeta();
   mountShell();
@@ -311,6 +313,8 @@ export function bootApp(): void {
   initMobileNav();
   initPasswordToggles();
   initReveal();
+  initCarousels();
+  initTabs();
 
   auth.subscribe(renderAuthState);
 

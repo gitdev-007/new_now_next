@@ -1,11 +1,13 @@
 /* ============================================================================
  * LayoverX — Landing (index) page
- * Hero, search bar, value props, categories, testimonials, FAQ, CTA.
+ * Hero, search bar, value props, categories, popular experiences carousel,
+ * why choose us tabs, how it works, testimonials carousel, FAQ, CTA.
  * ========================================================================== */
 
 import { ICONS } from "../lib/icons";
-import { FAQ, SERVICE_CATEGORIES, TESTIMONIALS, VALUE_PROPS } from "../data/catalog";
+import { FAQ, POPULAR_EXPERIENCES, SERVICE_CATEGORIES, TESTIMONIALS, VALUE_PROPS, WHY_CHOOSE_ITEMS } from "../data/catalog";
 import { bootApp } from "../lib/app";
+import { initCarousels, initTabs } from "../lib/ui";
 
 const ICON_BY_KEY = {
   bed: ICONS.bed,
@@ -23,6 +25,22 @@ const VALUE_ICON = {
   globe: ICONS.globe,
   creditCard: ICONS.creditCard,
   headphones: ICONS.headphones,
+} as const;
+
+const WHY_CHOOSE_ICON = {
+  shield: ICONS.shield,
+  clock: ICONS.clock,
+  globe: ICONS.globe,
+  crown: ICONS.crown,
+} as const;
+
+const EXPERIENCE_ICON = {
+  bed: ICONS.bed,
+  utensils: ICONS.utensils,
+  leaf: ICONS.leaf,
+  gamepad: ICONS.gamepad,
+  mountain: ICONS.mountain,
+  car: ICONS.car,
 } as const;
 
 function renderHero(): string {
@@ -291,8 +309,133 @@ function renderCta(): string {
   `;
 }
 
+function renderSearchBar(): string {
+  return `
+    <section class="hero-search" aria-label="Plan in seconds">
+      <div class="container">
+        <form class="search-bar reveal" id="quick-search" novalidate>
+          <div class="search-bar-grid cols-4">
+            <div class="field">
+              <label class="label" for="qs-area">Airport area</label>
+              <div class="select-wrap">
+                <select class="select" id="qs-area" required>
+                  <option value="near-airport">Near CSMIA · Andheri East</option>
+                  <option value="bandra">Bandra West</option>
+                  <option value="south-mumbai">South Mumbai · Colaba</option>
+                  <option value="juhu">Juhu · Versova</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label class="label" for="qs-arrival">Arrival</label>
+              <input class="input" id="qs-arrival" type="datetime-local" required />
+            </div>
+            <div class="field">
+              <label class="label" for="qs-departure">Departure</label>
+              <input class="input" id="qs-departure" type="datetime-local" required />
+            </div>
+            <div class="field" style="border-right: 0;">
+              <label class="label" for="qs-travelers">Travelers</label>
+              <div class="select-wrap">
+                <select class="select" id="qs-travelers" required>
+                  <option value="1">1 adult</option>
+                  <option value="2" selected>2 adults</option>
+                  <option value="3">3 adults</option>
+                  <option value="4">4+ family or group</option>
+                </select>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg" style="margin-top: var(--space-2);">
+              <span>Build my itinerary</span>
+              ${ICONS.arrowRight({ size: 18 })}
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+  `;
+}
+
+function renderPopularExperiences(): string {
+  return `
+    <section class="section section-alt" id="popular" aria-labelledby="popular-title">
+      <div class="container">
+        <div class="section-header center reveal">
+          <span class="eyebrow">Verified partners</span>
+          <h2 class="heading-2" id="popular-title">Popular Transit Experiences</h2>
+          <p class="text-body-lg">Selection of vetted partners hand-picked for speed, safety, and experience.</p>
+        </div>
+        <div class="carousel" id="popular-carousel" data-carousel>
+          <div class="carousel-track">
+            ${POPULAR_EXPERIENCES.map((item) => `
+              <div class="carousel-item" data-size="xl">
+                <div class="card card-interactive">
+                  <div class="card-media">
+                    <img src="${item.image}" alt="${item.title}" loading="lazy" />
+                    <span class="card-badge brand">${item.category}</span>
+                  </div>
+                  <div class="card-body">
+                    <h3 class="card-title">${item.title}</h3>
+                    <p class="card-description">${item.description}</p>
+                  </div>
+                  <div class="card-footer">
+                    <a href="${item.href}" class="btn btn-outline btn-sm">View details</a>
+                  </div>
+                </div>
+              </div>
+            `).join("")}
+          </div>
+          <button class="carousel-nav carousel-nav-prev" aria-label="Previous experience" data-carousel-prev>${ICONS.chevronLeft({ size: 20 })}</button>
+          <button class="carousel-nav carousel-nav-next" aria-label="Next experience" data-carousel-next>${ICONS.chevronRight({ size: 20 })}</button>
+          <div class="carousel-dots" data-carousel-dots></div>
+        </div>
+      </div>
+    </section>
+  `;
+}
+
+function renderWhyChoose(): string {
+  const tabKeys = WHY_CHOOSE_ITEMS.map((_, i) => `why-${i}`);
+  return `
+    <section class="section section-surface" aria-labelledby="why-title">
+      <div class="container">
+        <div class="section-header center reveal">
+          <span class="eyebrow">Why LayoverX</span>
+          <h2 class="heading-2" id="why-title">Built for travelers who refuse to waste a single hour.</h2>
+          <p class="text-body-lg">LayoverX is a curated transit marketplace — every service is verified, every minute of your layover is accounted for, and every booking is monitored in real time.</p>
+        </div>
+        <div class="tabs" id="why-choose-tabs" data-tabs>
+          <div class="tabs-list" role="tablist">
+            ${WHY_CHOOSE_ITEMS.map((item, i) => `
+              <button class="tab-trigger" role="tab" aria-selected="${i === 0}" aria-controls="why-panel-${i}" id="why-tab-${i}" data-tab-trigger="${i}">
+                <span class="tab-icon">${WHY_CHOOSE_ICON[item.icon as keyof typeof WHY_CHOOSE_ICON]({ size: 20 })}</span>
+                <span>${item.title}</span>
+              </button>
+            `).join("")}
+          </div>
+          <div class="tabs-panels">
+            ${WHY_CHOOSE_ITEMS.map((item, i) => `
+              <div class="tab-panel" role="tabpanel" id="why-panel-${i}" aria-labelledby="why-tab-${i}" data-tab-panel="${i}" style="${i === 0 ? '' : 'display:none'}">
+                <div class="split-panel">
+                  <div class="split-panel-media">
+                    <div class="trust-panel-icon">${WHY_CHOOSE_ICON[item.icon as keyof typeof WHY_CHOOSE_ICON]({ size: 48 })}</div>
+                  </div>
+                  <div class="split-panel-content">
+                    <h3 class="split-panel-title">${item.title}</h3>
+                    <p class="split-panel-text">${item.text}</p>
+                  </div>
+                </div>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+      </div>
+    </section>
+  `;
+}
+
 function renderPage(): string {
-  return [renderHero(), renderValueProps(), renderCategories(), renderHowItWorks(), renderTestimonials(), renderFaq(), renderCta()].join("\n");
+  return [renderHero(), renderSearchBar(), renderValueProps(), renderCategories(), renderPopularExperiences(), renderWhyChoose(), renderHowItWorks(), renderTestimonials(), renderFaq(), renderCta()].join("\n");
 }
 
 export function mount(): void {

@@ -75,6 +75,100 @@ export function toast(message: string, variant: "default" | "success" | "error" 
   }, 4200);
 }
 
+/* ─── Carousel ────────────────────────────────────────────────────────── */
+export function initCarousels(): void {
+  document.querySelectorAll<HTMLElement>("[data-carousel]").forEach((container) => {
+    const track = container.querySelector<HTMLElement>(".carousel-track");
+    const prevBtn = container.querySelector<HTMLButtonElement>("[data-carousel-prev]");
+    const nextBtn = container.querySelector<HTMLButtonElement>("[data-carousel-next]");
+    const dotsContainer = container.querySelector<HTMLElement>("[data-carousel-dots]");
+    const items = container.querySelectorAll<HTMLElement>(".carousel-item");
+    if (!track || items.length === 0) return;
+
+    let currentIndex = 0;
+    const totalItems = items.length;
+
+    function updateSlide() {
+      items.forEach((item, index) => {
+        item.dataset.active = String(index === currentIndex);
+      });
+      if (prevBtn) prevBtn.disabled = currentIndex === 0;
+      if (nextBtn) nextBtn.disabled = currentIndex >= totalItems - 1;
+    }
+
+    function goTo(index: number) {
+      currentIndex = Math.max(0, Math.min(index, totalItems - 1));
+      const itemWidth = (items[0] as HTMLElement).offsetWidth + 24;
+      track.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+      updateSlide();
+    }
+
+    prevBtn?.addEventListener("click", () => goTo(currentIndex - 1));
+    nextBtn?.addEventListener("click", () => goTo(currentIndex + 1));
+
+    // Touch/slide support
+    let startX = 0;
+    let isDragging = false;
+    track.addEventListener("touchstart", (e) => {
+      startX = e.touches[0].clientX;
+      isDragging = true;
+    }, { passive: true });
+    track.addEventListener("touchend", (e) => {
+      if (!isDragging) return;
+      const diff = e.changedTouches[0].clientX - startX;
+      if (Math.abs(diff) > 50) {
+        goTo(currentIndex + (diff < 0 ? 1 : -1));
+      }
+      isDragging = false;
+    }, { passive: true });
+
+    // Keyboard support
+    container.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") goTo(currentIndex + 1);
+      if (e.key === "ArrowLeft") goTo(currentIndex - 1);
+    });
+
+    // Dots
+    if (dotsContainer) {
+      dotsContainer.innerHTML = Array.from(items).map((_, i) => `<span class="carousel-dot${i === 0 ? ' active' : ''}" data-dot="${i}"></span>`).join('');
+      dotsContainer.querySelectorAll<HTMLElement>("[data-dot]").forEach((dot) => {
+        dot.addEventListener("click", () => goTo(Number(dot.dataset.dot)));
+      });
+    }
+
+    // Auto-play
+    const autoPlayInterval = setInterval(() => {
+      if (!container.matches(':hover')) {
+        goTo((currentIndex + 1) % totalItems);
+      }
+    }, 5000);
+
+    // Cleanup on page unload
+    window.addEventListener("unload", () => clearInterval(autoPlayInterval));
+
+    updateSlide();
+  });
+}
+
+/* ─── Tabs ────────────────────────────────────────────────────────────── */
+export function initTabs(): void {
+  document.querySelectorAll<HTMLElement>("[data-tabs]").forEach((container) => {
+    const triggers = container.querySelectorAll<HTMLElement>("[data-tab-trigger]");
+    const panels = container.querySelectorAll<HTMLElement>("[data-tab-panel]");
+
+    triggers.forEach((trigger) => {
+      trigger.addEventListener("click", () => {
+        const index = trigger.dataset.tabTrigger;
+        triggers.forEach((t) => t.setAttribute("aria-selected", "false"));
+        panels.forEach((p) => p.style.display = "none");
+        trigger.setAttribute("aria-selected", "true");
+        const panel = container.querySelector<HTMLElement>(`[data-tab-panel="${index}"]`);
+        if (panel) panel.style.display = "block";
+      });
+    });
+  });
+}
+
 /* ─── Header scroll behaviour ─────────────────────────────────────────── */
 export function initHeaderScroll(): void {
   const header = document.getElementById("site-header");

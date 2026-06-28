@@ -32,6 +32,20 @@ export interface ValueProp {
   text: string;
 }
 
+export interface Experience {
+  title: string;
+  description: string;
+  category: string;
+  image: string;
+  href: string;
+}
+
+export interface WhyChoose {
+  icon: "shield" | "clock" | "globe" | "crown";
+  title: string;
+  text: string;
+}
+
 export const SERVICE_CATEGORIES: ServiceCategory[] = [
   {
     slug: "hotels",
@@ -181,4 +195,82 @@ export const FAQ: FaqItem[] = [
 export const PARTNER_LOGOS: string[] = [
   "Taj Hotels", "Marriott", "Hyatt", "Trident", "ITC", "Leela",
   "Radisson", "Novotel", "Sofitel", "Hilton", "Oberoi", "Westin",
+];
+
+export const POPULAR_EXPERIENCES: Experience[] = [
+  {
+    title: "Taj Santacruz Day Rooms",
+    description:
+      "A 5-minute walk from Terminal 2 with a pool, day-use rooms, and award-winning Wi-Fi. Perfect for a long transit to refresh and reset.",
+    category: "Hotels",
+    image: "https://images.unsplash.com/photo-1582719508461-905c654771fa?auto=format&fit=crop&w=800&q=80",
+    href: "/hotels.html",
+  },
+  {
+    title: "Bandra West Food Crawl",
+    description:
+      "A 3-hour curated food walk through Bandra's historic cafés, modern bakeries, and the iconic Carter Road promenade.",
+    category: "Tours",
+    image: "https://images.unsplash.com/photo-1555212697-91775544d08c?auto=format&fit=crop&w=800&q=80",
+    href: "/tours.html",
+  },
+  {
+    title: "Signature Express Massage",
+    description:
+      "A 60-minute deep-tissue massage at Sofitel's premium spa. Optional pool and steam room access included.",
+    category: "Spa",
+    image: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=800&q=80",
+    href: "/spa.html",
+  },
+  {
+    title: "VR Neon Lounge & Games",
+    description:
+      "A 5-hour arcade pass near Andheri with premium VR pods, bowling, and classic pinball. Great for solo travelers and groups.",
+    category: "Gaming",
+    image: "https://images.unsplash.com/photo-1633329713122-314ce96bae97?auto=format&fit=crop&w=800&q=80",
+    href: "/gaming.html",
+  },
+  {
+    title: "Gateway Heritage Walk",
+    description:
+      "A 3-hour heritage walk around the Gateway of India, Oval Maidan, and Kala Ghoda. Includes an expert guide and a chai break.",
+    category: "Tours",
+    image: "https://images.unsplash.com/photo-1570168007201-dfb528c69538?auto=format&fit=crop&w=800&q=80",
+    href: "/tours.html",
+  },
+  {
+    title: "Premium Airport Transfer",
+    description:
+      "A fixed-price sedan transfer with an English-speaking chauffeur. Includes tolls, parking, and a flight-tracking meet-and-greet.",
+    category: "Transfers",
+    image: "https://images.unsplash.com/photo-1519003726564-015167856c1b?auto=format&fit=crop&w=800&q=80",
+    href: "/transfers.html",
+  },
+];
+
+export const WHY_CHOOSE_ITEMS: WhyChoose[] = [
+  {
+    icon: "shield",
+    title: "Verified for safety",
+    text:
+      "Every partner on LayoverX goes through a rigorous vetting process. We verify licenses, inspect hygiene standards, review driver backgrounds, and conduct recurring quality audits. Your safety and comfort are our priority.",
+  },
+  {
+    icon: "clock",
+    title: "Flight-aware timing",
+    text:
+      "Our itineraries are built around your actual flight schedule. We monitor flight arrival and departure times in real-time, instantly adjusting your bookings if your flight is delayed. We also build in a buffer for customs, immigration, and security.",
+  },
+  {
+    icon: "globe",
+    title: "Multi-lingual support",
+    text:
+      "Our concierge team speaks English, Hindi, Marathi, Arabic, Mandarin, and Russian. You will never feel lost or out of touch. Our 24/7 human support is available by chat, phone, or email, with an average response time of under 2 minutes.",
+  },
+  {
+    icon: "crown",
+    title: "Premium, not crowded",
+    text:
+      "We curate a small, exclusive selection of premium experiences, not an overwhelming marketplace. Every service is selected for quality over quantity, ensuring a memorable experience every time.",
+  },
 ];
